@@ -103,7 +103,7 @@ azureSAGetKey <- function(azureActiveContext, storageAccount,
   assert_that(is_subscription_id(subscriptionID))
   verbosity <- set_verbosity(verbose)
 
-  message("Fetching Storage Key..")
+  if(verbose) message("Fetching Storage Key..")
 
   URL <- paste0("https://management.azure.com/subscriptions/", subscriptionID,
                "/resourceGroups/", resourceGroup, 
@@ -175,8 +175,8 @@ azureCreateStorageAccount <- function(azureActiveContext, storageAccount,
   rl <- content(r, "text", encoding = "UTF-8")
   azureActiveContext$storageAccount <- storageAccount
   azureActiveContext$resourceGroup  <- resourceGroup
-  message("Create request accepted")
-  message("It can take a few moments to provision the storage account")
+  if(verbose) message("Create request accepted")
+  if(verbose) message("It can take a few moments to provision the storage account")
 
   if (!asynchronous) {
     wait_for_azure(
