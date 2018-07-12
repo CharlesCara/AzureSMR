@@ -39,7 +39,7 @@ azureAuthenticateOnAuthType <- function(azureActiveContext, authType, resource, 
   assert_that(is_authType(authType))
   assert_that(is_resource(resource))
 
-  print(paste0("Fetch azure active directory access token using authType = ", authType))
+  if(verbose) print(paste0("Fetch azure active directory access token using authType = ", authType))
   result <- switch(
     authType,
     RefreshToken = azureGetTokenRefreshToken(azureActiveContext),
@@ -140,11 +140,11 @@ azureGetTokenDeviceCode <- function(azureActiveContext, tenantID, clientID, reso
   # refresh and access token pair.
   refreshToken <- azureActiveContext$RefreshToken
   if (is_refreshToken(refreshToken)) {
-    print("Fetch azure active directory access token using RefreshToken")
+    if(verbose) print("Fetch azure active directory access token using RefreshToken")
     result = tryCatch({
       azureGetTokenRefreshToken(azureActiveContext)
     }, error = function(e) {
-      print(paste0("Error when fetching azure active directory access token using RefreshToken: ", e))
+      if(verbose) print(paste0("Error when fetching azure active directory access token using RefreshToken: ", e))
       azureActiveContext$RefreshToken <- NULL
       return(FALSE)
     })
