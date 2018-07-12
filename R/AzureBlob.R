@@ -149,7 +149,7 @@ azureBlobLS <- function(azureActiveContext, directory, recursive = FALSE,
 
   azureActiveContext$directory <- directory
   azureActiveContext$container <- container
-  message(paste("Current directory: ", storageAccount, ">", container, ":", directory, "\n"))
+  if(verbose) message(paste("Current directory: ", storageAccount, ">", container, ":", directory, "\n"))
 
   id_indir <- grep(paste0("^", directory), blobs$name)
   blobs <- blobs[id_indir,]
@@ -336,7 +336,7 @@ azurePutBlob <- function(azureActiveContext, blob, contents = "", file = "",
   stopWithAzureError(r)
 
   updateAzureActiveContext(azureActiveContext, blob = blob)
-  message("blob ", blob, " saved: ", getContentSize(contents), " bytes written")
+  if(verbose) message("blob ", blob, " saved: ", getContentSize(contents), " bytes written")
   TRUE
 }
 
