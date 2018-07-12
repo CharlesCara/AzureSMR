@@ -527,6 +527,8 @@ azureDeleteBlob <- function(azureActiveContext, blob, directory,
   r <- DELETE(URL, azure_storage_header(sharedKey, date = xdate), verbosity)
 
   stopWithAzureError(r)
-  if (status_code(r) == 202) message("Blob delete request accepted")
+  if (status_code(r) == 202) {
+    if(verbose) message("Blob delete request accepted")
+    }
   return(TRUE)
 }
